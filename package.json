@@ -1,0 +1,17 @@
+{
+  "name": "on36-ijs-seu-banco-comunitario",
+  "version": "1.0.0",
+  "description": "### Objetivo",
+  "main": "imagem_diagrama_fluxo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "node dist/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.5.3"
+  }
+}
