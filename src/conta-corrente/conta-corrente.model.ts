@@ -2,11 +2,11 @@ import Conta from '../conta/conta.model';
 
 class ContaCorrente extends Conta {
     constructor(
-        numero: string,
+        public codigo: number,
         public limiteChequeEspecial: number,
-        saldo: number = 0
+        public saldo: number = 0
     ) {
-        super(numero, saldo);
+        super(codigo, saldo);
     }
 }
 

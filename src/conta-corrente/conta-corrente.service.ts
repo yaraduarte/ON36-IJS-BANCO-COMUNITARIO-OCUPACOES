@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import SaqueResult from 'src/interfaces/saqueResult';
 import contaCorrente from './conta-corrente.model';
+import { Injectable } from '@nestjs/common';
 import * as path from 'path';
 import * as fs from 'fs';
 
@@ -10,7 +11,7 @@ export class ContaCorrenteService {
         const data = fs.readFileSync(this.filePath, 'utf8')
         return JSON.parse(data) as contaCorrente[]
     }
-    private depositar(codigoConta: number, valor: number): contaCorrente {
+    public depositar(codigoConta: number, valor: number): contaCorrente {
         const contasCorrente = this.leContas()
         const contaCorrente = contasCorrente.find(contasCorrente => contasCorrente.codigo === Number(codigoConta))
 
@@ -22,7 +23,7 @@ export class ContaCorrenteService {
         return contaCorrente
     }
 
-    private sacar(codigoContaCorrente: number, valor: number): Object {
+    public sacar(codigoContaCorrente: number, valor: number): SaqueResult {
         const contasCorrente = this.leContas()
         const contaCorrente = contasCorrente.find(contas => contas.codigo === Number(codigoContaCorrente))
 
@@ -43,8 +44,8 @@ export class ContaCorrenteService {
         }
     }
 
-    private transferir(codigoContaCorrenteOrigem: number, valor: number, codigoContaDestino: number): Object {
-        const saquePossivel = this.sacar(codigoContaCorrenteOrigem, valor)
+    public transferir(codigoContaCorrenteOrigem: number, valor: number, codigoContaDestino: number): Object {
+        const saquePossivel: SaqueResult = this.sacar(codigoContaCorrenteOrigem, valor)
         if (saquePossivel.saqueRealizado) {
             this.depositar(codigoContaDestino, valor);
             return {
