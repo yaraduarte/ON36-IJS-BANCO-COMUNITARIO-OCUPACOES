@@ -1,7 +1,7 @@
 import { Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ContaService } from './conta.service';
 import Conta from './conta.model';
-import Cliente from '../cliente/cliente.model'; // Import the 'Cliente' type
+import Cliente from '../cliente/cliente.model'; 
 
 @Controller('conta')
 export class ContaController {

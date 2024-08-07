@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import Conta from './conta.model';
-import Cliente from '../cliente/cliente.model';
 import ContaFactory from './ContaFactory';
 import ContaRepository from './contaRepository'; 
-import tipoContaEnum from '../Enums/tipoContaEnum'; // Assumindo que tipoContaEnum está em um arquivo separado
+import tipoContaEnum from '../Enums/tipoContaEnum';  
+import ContaModule from './conta.module'; 
+import ContaCorrente from '../conta-corrente/conta-corrente.model'; // Import the ContaCorrente type
+import ContaPoupanca from 'src/conta-poupanca/conta-poupanca.model';
 
 @Injectable()
 export class ContaService {
@@ -65,7 +67,7 @@ export class ContaService {
         return true;
     }
 
-    listarContas(): Conta[] {
+    listarContas(): ContaModule[] {
         const clientes = this.contaRepository.lerClientes();
         return clientes.flatMap(c => c.contas);
     }

@@ -6,4 +6,6 @@ import { ContaController } from './conta.controller';
   providers: [ContaService],
   controllers: [ContaController]
 })
-export default class ContaModule {}
+export default class ContaModule {
+    codigo: number;
+}
