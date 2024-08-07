@@ -1,13 +1,17 @@
 import Conta from '../conta/conta.model';
+import tipoContaEnum from '../Enums/tipoContaEnum'; 
 
 class ContaPoupanca extends Conta {
+    public taxaJuros: number;
+
     constructor(
-        public codigo: number,
-        public taxaJuros: number,
-        public saldo: number = 0
+        codigo: number,
+        taxaJuros: number,
+        saldo: number = 0
     ) {
-        super(codigo, saldo);
+        super(codigo, saldo, tipoContaEnum.POUPANCA);
+        this.taxaJuros = taxaJuros;
     }
 }
 
-export default ContaPoupanca
+export default ContaPoupanca;
