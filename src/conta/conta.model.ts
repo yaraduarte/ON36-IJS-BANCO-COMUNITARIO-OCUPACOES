@@ -1,15 +1,11 @@
-enum tipoContaEnum {
-    CORRENTE = 1,
-    POUPANCA = 2,
-    INVESTIMENTO = 3
-}
+const tipoContaEnum = require('../Enums/tipoContaEnum');
 
 abstract class Conta {
     constructor(
-        public codigo: number = 0,
-        public dataCriacao: Date,
-        public tipo: tipoContaEnum
+        public codigo: number,
+        public saldo: number = 0,
+        public tipo: typeof tipoContaEnum
     ) {}
 }
 
-export default Conta
+export default Conta;

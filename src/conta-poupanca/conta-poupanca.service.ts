@@ -1,61 +1,58 @@
-import SaqueResult from 'src/interfaces/saqueResult';
-import ContaPoupanca from './conta-poupanca.model';
 import { Injectable } from '@nestjs/common';
-import * as path from 'path';
-import * as fs from 'fs';
+import ContaPoupanca from './conta-poupanca.model';
+import SaqueResult from 'src/interfaces/saqueResult';
+import ContaRepository from '../conta/contaRepository'; 
+import tipoContaEnum from '../Enums/tipoContaEnum'; 
 
 @Injectable()
 export class ContaPoupancaService {
-    private readonly filePath = path.resolve('./ContaPoupanca.json')
-    private leContas(): ContaPoupanca[] {
-        const data = fs.readFileSync(this.filePath, 'utf8')
-        return JSON.parse(data) as ContaPoupanca[]
-    }
-    public depositar(codigoConta: number, valor: number): ContaPoupanca {
-        const contasPoupanca = this.leContas()
-        const ContaPoupanca = contasPoupanca.find(contas => contas.codigo === Number(codigoConta))
+    constructor(private readonly contaRepository: ContaRepository) {}
 
-        if(!ContaPoupanca){
-            console.log(`Conta de número ${ContaPoupanca} não encontrada`)
+    private encontrarConta(codigoConta: number): ContaPoupanca {
+        const contas = this.contaRepository.lerContas() as ContaPoupanca[];
+        const conta = contas.find(c => c.codigo === codigoConta);
+        if (!conta) {
+            throw new Error(`Conta de número ${codigoConta} não encontrada`);
         }
+        return conta;
+    }
 
-        ContaPoupanca.saldo += valor
-        return ContaPoupanca
+    public depositar(codigoConta: number, valor: number): ContaPoupanca {
+        const conta = this.encontrarConta(codigoConta);
+        conta.saldo += valor;
+        this.contaRepository.salvarConta(conta);
+        return conta;
     }
 
     public sacar(codigoConta: number, valor: number): SaqueResult {
-        const contasPoupanca = this.leContas()
-        const ContaPoupanca = contasPoupanca.find(contas => contas.codigo === Number(codigoConta))
+        const conta = this.encontrarConta(codigoConta);
 
-        if(!ContaPoupanca){
-            console.log(`Conta de número ${ContaPoupanca} não encontrada`)
-        }
-
-        if (valor <= ContaPoupanca.saldo) {
-            ContaPoupanca.saldo -= valor;
+        if (valor <= conta.saldo) {
+            conta.saldo -= valor;
+            this.contaRepository.salvarConta(conta);
             return {
                 saqueRealizado: true,
-                mensagem: `Novo saldo da conta = R$${ContaPoupanca.saldo}`
-            }
+                mensagem: `Novo saldo da conta = R$${conta.saldo}`
+            };
         }
         return {
             saqueRealizado: false,
-            mensagem: `Não é possível sacar o valor pois o saldo da conta é = R$${ContaPoupanca.saldo}`
-        }
+            mensagem: `Não é possível sacar o valor pois o saldo da conta é = R$${conta.saldo}`
+        };
     }
 
-    public transferir(codigoContaPoupancaOrigem: number, valor: number, codigoContaDestino: number): Object {
-        const saquePossivel: SaqueResult = this.sacar(codigoContaPoupancaOrigem, valor)
+    public transferir(codigoContaOrigem: number, valor: number, codigoContaDestino: number): Object {
+        const saquePossivel: SaqueResult = this.sacar(codigoContaOrigem, valor);
         if (saquePossivel.saqueRealizado) {
             this.depositar(codigoContaDestino, valor);
             return {
-                tranferenciaRealizada: true,
-                mensagem: `Tranferência realizada`
-            }
+                transferenciaRealizada: true,
+                mensagem: `Transferência realizada`
+            };
         }
         return {
-            tranferenciaRealizada: false,
-            mensagem: `Tranferência não realizada`
-        }
+            transferenciaRealizada: false,
+            mensagem: `Transferência não realizada`
+        };
     }
 }

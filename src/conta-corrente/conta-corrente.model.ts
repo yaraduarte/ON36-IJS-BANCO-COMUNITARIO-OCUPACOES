@@ -1,13 +1,17 @@
 import Conta from '../conta/conta.model';
+import tipoContaEnum from '../Enums/tipoContaEnum'; 
 
 class ContaCorrente extends Conta {
+    public limiteChequeEspecial: number;
+
     constructor(
-        public codigo: number,
-        public limiteChequeEspecial: number,
-        public saldo: number = 0
+        codigo: number,
+        limiteChequeEspecial: number,
+        saldo: number = 0
     ) {
-        super(codigo, saldo);
+        super(codigo, saldo, tipoContaEnum.CORRENTE);
+        this.limiteChequeEspecial = limiteChequeEspecial;
     }
 }
 
-export default ContaCorrente
+export default ContaCorrente;
