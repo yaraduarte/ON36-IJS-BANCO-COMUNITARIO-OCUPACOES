@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import ContaPoupanca from './conta-poupanca.model';
 import SaqueResult from 'src/interfaces/saqueResult';
-import ContaRepository from '../conta/contaRepository'; 
-import tipoContaEnum from '../Enums/tipoContaEnum'; 
+import { ContaRepository } from '../conta/contaRepository'; 
 
 @Injectable()
 export class ContaPoupancaService {
