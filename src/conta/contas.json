@@ -1,0 +1,25 @@
+[
+    {
+        "id": "1",
+        "nome": "Cliente A",
+        "contas": [
+            {
+                "codigo": 1,
+                "tipo": "CORRENTE",
+                "limiteChequeEspecial": 500,
+                "taxaJuros": 0.03
+            }
+        ]
+    },
+    {
+        "id": "2",
+        "nome": "Cliente B",
+        "contas": [
+            {
+                "codigo": 2,
+                "tipo": "POUPANCA",
+                "taxaJuros": 0.01
+            }
+        ]
+    }
+]

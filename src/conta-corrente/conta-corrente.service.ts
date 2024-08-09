@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import ContaCorrente from './conta-corrente.model';
+import { ContaRepository } from '../conta/contaRepository';
 import SaqueResult from 'src/interfaces/saqueResult';
-import ContaRepository from '../conta/ContaRepository'; 
-import tipoContaEnum from '../Enums/tipoContaEnum'; 
 
 @Injectable()
 export class ContaCorrenteService {
