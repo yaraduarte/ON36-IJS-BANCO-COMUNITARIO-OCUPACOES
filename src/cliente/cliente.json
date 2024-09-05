@@ -1,0 +1,27 @@
+[
+    {
+      "id": "1",
+      "nome": "João Silva",
+      "endereco": "Rua A",
+      "telefone": "123456789",
+      "email": "joao.silva@example.com",
+      "contas": []
+    },
+    {
+      "id": "2",
+      "nome": "Maria Oliveira",
+      "endereco": "Rua B",
+      "telefone": "987654321",
+      "email": "maria.oliveira@example.com",
+      "contas": []
+    },
+    {
+      "id": "3",
+      "nome": "Carlos Souza",
+      "endereco": "Rua C",
+      "telefone": "456789123",
+      "email": "carlos.souza@example.com",
+      "contas": []
+    }
+  ]
+  

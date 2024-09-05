@@ -1,5 +1,5 @@
 import Conta from '../conta/conta.model';
-import tipoContaEnum from '../Enums/tipoContaEnum'; 
+import tipoContaEnum from '../Enums/tipoContaEnum';
 
 class ContaCorrente extends Conta {
     public limiteChequeEspecial: number;

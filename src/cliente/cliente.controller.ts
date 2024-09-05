@@ -1,31 +1,23 @@
-import { Controller, Delete, Get, Patch, Post } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Body, Param } from '@nestjs/common';
 import { ClienteService } from './cliente.service';
+import Cliente from './cliente.model';
 
 @Controller('cliente')
 export class ClienteController {
-    constructor(public readonly clienteService: ClienteService) {}
-    @Get()
-    public listarClientes() {
-        return this.clienteService.leClientes();
-    }
+    constructor(private readonly clienteService: ClienteService) {}
 
-    @Get(':id')
-    public buscarCliente(id: string) {
-        return this.clienteService.buscarCliente(id);
+    @Get()
+    public obterClientes(): Cliente[] {
+        return this.clienteService.obterClientes();
     }
 
     @Post()
-    public criarCliente(nome: string, id: string, endereco: string, telefone: string, email: string) {
-        return this.clienteService.criarCliente(nome, id, endereco, telefone, email);
-    }
-
-    @Patch(':id')
-    public alterarCliente(id: string, nome?: string, endereco?: string, telefone?: string, email?: string) {
-        return this.clienteService.alterarCliente(id, nome, endereco, telefone, email);
+    public criarOuAtualizarCliente(@Body() cliente: Cliente): Cliente {
+        return this.clienteService.criarOuAtualizarCliente(cliente);
     }
 
     @Delete(':id')
-    public deletarCliente(id: string) {
+    public deletarCliente(@Param('id') id: string): boolean {
         return this.clienteService.deletarCliente(id);
     }
 }
